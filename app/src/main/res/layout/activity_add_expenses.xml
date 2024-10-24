@@ -10,14 +10,14 @@
 
     <ImageButton
         android:id="@+id/back_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:src="@drawable/back_1"
         android:background="@color/white"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="5dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="10dp"
         />
 <TextView
     android:layout_width="wrap_content"
@@ -58,7 +58,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf=""
+                app:layout_constraintEnd_toStartOf="@id/enter_expenses"
                 android:src="@drawable/dollor"
                 android:layout_marginLeft="10dp"
                 />
@@ -74,5 +74,97 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
+
+   <com.google.android.material.card.MaterialCardView
+       android:id="@+id/card_4"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       app:layout_constraintStart_toStartOf="parent"
+       app:layout_constraintEnd_toEndOf="parent"
+       app:layout_constraintTop_toBottomOf="@id/card_3"
+       android:layout_marginTop="30dp"
+       android:layout_marginLeft="30dp"
+       android:layout_marginRight="30dp"
+       android:elevation="20dp"
+       app:cardCornerRadius="20dp"
+       >
+
+       <androidx.constraintlayout.widget.ConstraintLayout
+           android:layout_width="match_parent"
+           android:layout_height="300dp"
+           android:padding="10dp"
+           android:background="#B2C4F4">
+           <TextView
+               android:id="@+id/create_category"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               app:layout_constraintTop_toTopOf="parent"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               android:text="Create a Category"
+               android:textStyle="bold"
+               android:textSize="24sp"
+               android:layout_marginTop="15dp"
+               />
+           <EditText
+               android:id="@+id/category_name"
+               android:layout_width="290dp"
+               android:layout_height="45dp"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/create_category"
+               android:layout_marginTop="20dp"
+               android:background="@color/white"
+               android:hint="Name"
+               android:textColorHint="@color/black"
+               />
+
+           <Spinner
+               android:layout_width="290dp"
+               android:layout_height="45dp"
+               android:id="@+id/category_spinner"
+               app:layout_constraintTop_toBottomOf="@id/category_name"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               android:layout_marginTop="20dp"
+               android:prompt="@string/category_prompt"
+               android:background="@color/white"
+               />
+
+           <ImageButton
+               android:layout_width="290dp"
+               android:layout_height="45dp"
+               android:id="@+id/color_btn"
+               android:layout_marginTop="20dp"
+               app:layout_constraintStart_toStartOf="parent"
+               app:layout_constraintEnd_toEndOf="parent"
+               app:layout_constraintTop_toBottomOf="@id/category_spinner"
+               android:src="@drawable/color_1"
+               />
+
+
+
+
+       </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+   </com.google.android.material.card.MaterialCardView>
+
+
+    <Button
+        android:id="@+id/save_button"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:backgroundTint="@color/black"
+        app:layout_constraintTop_toBottomOf="@id/card_4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="save" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

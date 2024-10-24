@@ -7,6 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
 >
+    <include
+        android:id="@+id/empty_transaction_view"
+        layout="@layout/empty_transaction_view"
+        app:layout_constraintTop_toBottomOf="@id/recyclerview"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <com.google.android.material.card.MaterialCardView
         android:id="@+id/card_1"
