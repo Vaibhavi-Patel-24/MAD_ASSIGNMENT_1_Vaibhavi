@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
     private fun updateTransactionList() {
         val transactionList = listOf(
             Transaction(R.drawable.fast_food_1, "Food", "-$40.00", "Today"),
-            Transaction(R.drawable.airplane_1, "Travel", "-80.00", "Yesterday"),
+            Transaction(R.drawable.agriculture_1, "Environment", "-40.00", "Yesterday"),
             Transaction(R.drawable.shopping_1, "Shopping", "-$18.00", "Last Week")
         )
 
