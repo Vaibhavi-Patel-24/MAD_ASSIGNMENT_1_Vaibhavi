@@ -169,7 +169,7 @@
         app:layout_constraintTop_toBottomOf="@id/card_1"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="35dp"
-        android:layout_marginLeft="178dp"
+        android:layout_marginLeft="170dp"
         />
 
 
@@ -195,7 +195,8 @@
     android:padding="15dp"
     android:layout_marginTop="30dp"
     android:layout_marginBottom="30dp"
-    android:contentDescription="Add Icon"/>
+    android:contentDescription="Add Icon"
+        />
 
     <ImageButton
         android:id="@+id/home_button"

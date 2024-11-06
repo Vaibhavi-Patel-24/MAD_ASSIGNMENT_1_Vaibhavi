@@ -1,16 +1,21 @@
 package com.example.mad_assignment_1
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import android.graphics.drawable.GradientDrawable
+import android.util.Log
+
 
 class TransactionAdapter(
     private var transactionList: List<Transaction>,
     private val emptyTextView: TextView // Pass the TextView to handle visibility
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
 
     companion object {
         private const val VIEW_TYPE_EMPTY = 0
@@ -48,9 +53,29 @@ class TransactionAdapter(
         }
     }
 
+
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is TransactionViewHolder) {
             val transaction = transactionList[position]
+
+            val defaultColor = Color.parseColor("#D06BED")
+
+            val iconColor: Int = when (transaction.iconColor) {
+                null -> {
+                    defaultColor // Use the default color if it's null
+                }
+
+                else -> {
+                    transaction.iconColor // Use the provided color
+                }
+            }
+
+
+            val gradientDrawable = GradientDrawable()
+            gradientDrawable.shape = GradientDrawable.OVAL // Set the shape to a circle
+            gradientDrawable.setColor(iconColor) // Set the dynamic color
+
+            holder.icon.background = gradientDrawable
             holder.icon.setImageResource(transaction.iconResId) // Assuming you have icons
             holder.title.text = transaction.title
             holder.amount.text = transaction.amount
@@ -59,6 +84,7 @@ class TransactionAdapter(
             holder.emptyMessage.text = "No transactions available"
         }
     }
+
 
     override fun getItemCount(): Int {
         return if (transactionList.isEmpty()) 1 else transactionList.size
@@ -70,4 +96,6 @@ class TransactionAdapter(
         notifyDataSetChanged()
         emptyTextView.visibility = if (transactionList.isEmpty()) View.VISIBLE else View.GONE
     }
+
+
 }

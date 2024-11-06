@@ -1,5 +1,5 @@
 <resources>
     <string name="app_name">MAD_ASSIGNMENT_1</string>
-    <string name="category_prompt">Category</string>
+    <string name="category">Select a Category</string>
 
 </resources>

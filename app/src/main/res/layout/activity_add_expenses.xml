@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".add_expenses">
+    tools:context=".AddExpenses">
 
 
     <ImageButton
@@ -29,11 +29,11 @@
     android:text="Add Expenses"
     android:textSize="24sp"
     android:textStyle="bold"
-    android:layout_marginTop="60dp"
+    android:layout_marginTop="40dp"
     />
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:id="@+id/card_3"
         app:layout_constraintTop_toBottomOf="@id/add_expenses"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,7 +64,7 @@
                 />
             <EditText
                 android:layout_width="215dp"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:id="@+id/enter_expenses"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/doller"
@@ -92,7 +92,7 @@
 
        <androidx.constraintlayout.widget.ConstraintLayout
            android:layout_width="match_parent"
-           android:layout_height="300dp"
+           android:layout_height="340dp"
            android:padding="10dp"
            android:background="#B2C4F4">
            <TextView
@@ -105,45 +105,102 @@
                android:text="Create a Category"
                android:textStyle="bold"
                android:textSize="24sp"
-               android:layout_marginTop="15dp"
+               android:layout_marginTop="10dp"
                />
-           <EditText
+
+           <com.google.android.material.card.MaterialCardView
                android:id="@+id/category_name"
                android:layout_width="290dp"
-               android:layout_height="45dp"
+               android:layout_height="50dp"
                app:layout_constraintStart_toStartOf="parent"
                app:layout_constraintEnd_toEndOf="parent"
                app:layout_constraintTop_toBottomOf="@id/create_category"
-               android:layout_marginTop="20dp"
-               android:background="@color/white"
-               android:hint="Name"
-               android:textColorHint="@color/black"
-               />
-
+               android:layout_marginTop="15dp"
+               android:elevation="4dp"
+               app:cardCornerRadius="8dp"
+               >
+               <androidx.constraintlayout.widget.ConstraintLayout
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent">
+               <TextView
+                   android:id="@+id/category_name_name"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:gravity="center_vertical"
+                   android:paddingStart="8dp"
+                   android:paddingEnd="8dp"
+                   app:layout_constraintStart_toStartOf="parent"
+                   app:layout_constraintTop_toTopOf="parent"
+                   app:layout_constraintBottom_toBottomOf="parent"
+                   android:text="Name"
+                   android:textColor="@color/black"
+                   android:textSize="16sp" />
+               <EditText
+                   android:id="@+id/enter_category_name"
+                   android:layout_width="200dp"
+                   android:layout_height="match_parent"
+                   app:layout_constraintStart_toEndOf="@id/category_name_name"
+                   app:layout_constraintTop_toBottomOf="@id/category_name_name"
+                   android:inputType="text"
+                   />
+               </androidx.constraintlayout.widget.ConstraintLayout>
+           </com.google.android.material.card.MaterialCardView>
            <Spinner
                android:layout_width="290dp"
-               android:layout_height="45dp"
+               android:layout_height="57dp"
                android:id="@+id/category_spinner"
                app:layout_constraintTop_toBottomOf="@id/category_name"
                app:layout_constraintStart_toStartOf="parent"
                app:layout_constraintEnd_toEndOf="parent"
-               android:layout_marginTop="20dp"
-               android:prompt="@string/category_prompt"
+               android:layout_marginTop="15dp"
+               android:prompt="@string/category"
                android:background="@color/white"
                />
 
-           <ImageButton
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/color_1"
+            android:layout_width="290dp"
+            android:layout_height="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/category_spinner"
+            android:layout_marginTop="15dp"
+            android:elevation="4dp"
+            app:cardCornerRadius="8dp"
+            >
+           <TextView
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:gravity="center_vertical"
+               android:paddingStart="8dp"
+               android:paddingEnd="8dp"
+               android:text="Color"
+               android:textColor="@color/black"
+               android:textSize="16sp" />
+        </com.google.android.material.card.MaterialCardView>
+
+           <com.google.android.material.card.MaterialCardView
+               android:id="@+id/date"
                android:layout_width="290dp"
-               android:layout_height="45dp"
-               android:id="@+id/color_btn"
-               android:layout_marginTop="20dp"
+               android:layout_height="50dp"
                app:layout_constraintStart_toStartOf="parent"
                app:layout_constraintEnd_toEndOf="parent"
-               app:layout_constraintTop_toBottomOf="@id/category_spinner"
-               android:src="@drawable/color_1"
-               />
-
-
+               app:layout_constraintTop_toBottomOf="@id/color_1"
+               android:layout_marginTop="15dp"
+               android:elevation="4dp"
+               app:cardCornerRadius="8dp"
+               >
+               <TextView
+                   android:id="@+id/date_text"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   android:gravity="center_vertical"
+                   android:paddingStart="8dp"
+                   android:paddingEnd="8dp"
+                   android:text="Date"
+                   android:textColor="@color/black"
+                   android:textSize="16sp" />
+           </com.google.android.material.card.MaterialCardView>
 
 
        </androidx.constraintlayout.widget.ConstraintLayout>
