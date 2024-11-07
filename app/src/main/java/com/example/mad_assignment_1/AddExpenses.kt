@@ -16,6 +16,8 @@ import com.google.android.material.card.MaterialCardView
 import yuku.ambilwarna.AmbilWarnaDialog
 import android.app.DatePickerDialog
 import android.widget.TextView
+import androidx.core.content.ContextCompat
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.Calendar
 
 class AddExpenses : AppCompatActivity() {
@@ -26,7 +28,7 @@ class AddExpenses : AppCompatActivity() {
     private lateinit var dateCard: MaterialCardView
     private lateinit var dateTextView: TextView
 
-    val icons = arrayOf(
+    private val icons = arrayOf(
         R.drawable.agriculture,
         R.drawable.airplane,
         R.drawable.fast_food,
@@ -95,6 +97,9 @@ class AddExpenses : AppCompatActivity() {
         saveButton.setOnClickListener {
             saveTransaction()
         }
+
+
+
 
     }
 

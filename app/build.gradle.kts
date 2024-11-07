@@ -15,6 +15,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables.useSupportLibrary = true
+
     }
 
     buildTypes {
@@ -36,7 +38,10 @@ android {
 }
 
 dependencies {
-    implementation("com.github.yukuku:ambilwarna:2.0.1")
+    implementation("com.google.android.material:material:1.9.0")
+    implementation("androidx.viewpager2:viewpager2:1.0.0")
+    implementation(libs.material.v190)
+    implementation(libs.ambilwarna)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

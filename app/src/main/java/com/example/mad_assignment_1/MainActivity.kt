@@ -1,9 +1,11 @@
 package com.example.mad_assignment_1
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +17,9 @@ import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.material.card.MaterialCardView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var transactionAdapter: TransactionAdapter
@@ -60,7 +65,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        // Navigate to the add_expenses activity
         val addIcon: ImageButton = findViewById(R.id.add_icon)
         addIcon.setOnClickListener {
             val intent = Intent(this, AddExpenses::class.java)
@@ -71,6 +75,31 @@ class MainActivity : AppCompatActivity() {
 
         // Load initial transaction data
         updateEmptyState()
+
+
+        //bottom nav
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_nav_bar)
+        val colorStateList = ContextCompat.getColorStateList(this, R.color.nav_item_icon_color)
+        bottomNavigationView.itemIconTintList = colorStateList
+        bottomNavigationView.selectedItemId = R.id.nav_home
+
+        bottomNavigationView.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> {
+                    // Stay on MainActivity for Home
+                    true
+                }
+
+                R.id.nav_graph -> {
+                    // Navigate to GraphActivity
+                    val intent = Intent(this, Graph::class.java)
+                    startActivity(intent)
+                    true
+                }
+                else -> false
+            }
+        }
+
     }
     private fun updateEmptyState() {
         if (transactionList.isEmpty()) {
@@ -104,6 +133,8 @@ class MainActivity : AppCompatActivity() {
         transactionAdapter.notifyItemInserted(transactionList.size - 1) // Notify adapter of new item
         updateEmptyState() // Update the empty state after adding a new transaction
     }
+
+
 
     companion object {
         const val ADD_TRANSACTION_REQUEST = 1 // Request code for adding transactions

@@ -8,23 +8,12 @@
     tools:context=".AddExpenses">
 
 
-    <ImageButton
-        android:id="@+id/back_btn"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/back_1"
-        android:background="@color/white"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="10dp"
-        />
 <TextView
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:id="@+id/add_expenses"
     app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@id/back_btn"
+    app:layout_constraintTop_toTopOf="parent"
     app:layout_constraintEnd_toEndOf="parent"
     android:text="Add Expenses"
     android:textSize="24sp"
@@ -220,8 +209,18 @@
         android:textSize="25dp"
         android:backgroundTint="@color/black"
         app:layout_constraintTop_toBottomOf="@id/card_4"
+        app:layout_constraintBottom_toTopOf="@id/bottom_nav_bar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="save" />
-
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_nav_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:menu="@menu/bottom_nav_menu"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
