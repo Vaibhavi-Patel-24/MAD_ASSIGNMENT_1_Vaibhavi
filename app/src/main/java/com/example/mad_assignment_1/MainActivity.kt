@@ -6,6 +6,7 @@ import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.widget.EditText
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -17,6 +18,7 @@ import android.widget.TextView
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.card.MaterialCardView
@@ -27,6 +29,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private val transactionList = mutableListOf<Transaction>()
     private lateinit var addTransactionLauncher: ActivityResultLauncher<Intent>
+    private lateinit var inputText1: TextView
+    private lateinit var totalExpenseTextView: TextView
+    private lateinit var incomeTextView: TextView
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,9 +50,14 @@ class MainActivity : AppCompatActivity() {
 
         emptyTextView = findViewById(R.id.empty_text)
         recyclerView = findViewById(R.id.recyclerview)
+        inputText1 = findViewById(R.id.input_text_1)
+        totalExpenseTextView = findViewById(R.id.card_6_text_2)
+        incomeTextView = findViewById(R.id.card_5_text_2)
+
+
 
         // Initialize the TransactionAdapter with an empty list and the empty TextView
-        transactionAdapter = TransactionAdapter(transactionList, emptyTextView)
+        transactionAdapter = TransactionAdapter(transactionList, emptyTextView,totalExpenseTextView,incomeTextView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = transactionAdapter
 
@@ -75,6 +86,10 @@ class MainActivity : AppCompatActivity() {
 
         // Load initial transaction data
         updateEmptyState()
+
+
+        // Show the salary input prompt when the app opens
+        showSalaryInputPrompt()
 
 
         //bottom nav
@@ -106,10 +121,55 @@ class MainActivity : AppCompatActivity() {
             emptyTextView.text = "No transactions available" // Set the empty message
             emptyTextView.visibility = TextView.VISIBLE // Show the empty message
             recyclerView.visibility = RecyclerView.GONE // Hide the recycler view
+            totalExpenseTextView.text = "$0.00"
         } else {
             emptyTextView.visibility = TextView.GONE // Hide the empty message
             recyclerView.visibility = RecyclerView.VISIBLE // Show the recycler view
+            updateTotalExpense()
         }
+    }
+
+    private fun updateTotalExpense() {
+        val totalExpense = transactionList.sumOf {
+            it.amount.toDoubleOrNull() ?: 0.0
+        }
+        val formattedExpense = if (totalExpense < 0) {
+            "- $${String.format("%.2f", -totalExpense)}" // Display as "- $100.00"
+        } else {
+            "$${String.format("%.2f", totalExpense)}"   // Display as "$100.00"
+        }
+
+        totalExpenseTextView.text = formattedExpense
+
+        updateIncome()
+
+    }
+
+    private fun updateIncome() {
+        // Fetch the current total balance and expense from their respective TextViews
+        val totalBalance =inputText1.text.toString().replace("$", "").trim().toDoubleOrNull() ?: 0.0
+        val totalExpense = totalExpenseTextView .text.toString().replace("$", "").replace("-", "").trim().toDoubleOrNull() ?: 0.0
+
+        Log.d("MainActivity", "Total Balance: $totalBalance")
+        Log.d("MainActivity", "Total Expense: $totalExpense")
+
+        // Calculate income
+        val income = totalBalance - totalExpense
+
+        // Format the income with a "+" sign if it is positive
+        val formattedIncome = if (income > 0) {
+            "+$${String.format("%.2f", income)}"
+        } else {
+            "$${String.format("%.2f", income)}"
+        }
+
+        // Update the Income TextView
+            incomeTextView.text = formattedIncome
+
+
+
+        Log.d("MainActivity", "Formatted Income: $formattedIncome")
+
     }
 
     // This method is called when the AddExpenses activity returns with a new transaction
@@ -132,8 +192,34 @@ class MainActivity : AppCompatActivity() {
         transactionList.add(transaction)
         transactionAdapter.notifyItemInserted(transactionList.size - 1) // Notify adapter of new item
         updateEmptyState() // Update the empty state after adding a new transaction
+        updateTotalExpense()
+        updateIncome()
     }
 
+    private fun showSalaryInputPrompt() {
+        val salaryInput = EditText(this)
+        salaryInput.hint = "$20000"
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("Total Balance")
+            .setMessage("Please enter your total balance")
+            .setView(salaryInput)
+            .setPositiveButton("OK") { _, _ ->
+                val salaryText = salaryInput.text.toString()
+                val salary = salaryText.toDoubleOrNull()
+                if (salary != null) {
+                    inputText1.text = "$ $salary"
+                    updateIncome()
+                } else {
+                    inputText1.text = "$0.00"
+                    Log.e("MainActivity", "Invalid input for salary")
+                }
+            }
+            .setNegativeButton("Cancel") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+        dialog.show()
+    }
 
 
     companion object {

@@ -13,7 +13,10 @@ import android.util.Log
 
 class TransactionAdapter(
     private var transactionList: List<Transaction>,
-    private val emptyTextView: TextView // Pass the TextView to handle visibility
+    private val emptyTextView: TextView ,
+    private val totalExpenseTextView: TextView,
+    private val incomeTextView: TextView
+
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
@@ -78,7 +81,15 @@ class TransactionAdapter(
             holder.icon.background = gradientDrawable
             holder.icon.setImageResource(transaction.iconResId) // Assuming you have icons
             holder.title.text = transaction.title
-            holder.amount.text = transaction.amount
+
+            val amountValue = transaction.amount.toDoubleOrNull() ?: 0.0
+
+            holder.amount.text = if (amountValue < 0) {
+                "- $${String.format("%.2f", -amountValue)}"
+            } else {
+                "$${String.format("%.2f", amountValue)}"
+            }
+
             holder.date.text = transaction.date
         } else if (holder is EmptyViewHolder) {
             holder.emptyMessage.text = "No transactions available"
@@ -96,6 +107,7 @@ class TransactionAdapter(
         notifyDataSetChanged()
         emptyTextView.visibility = if (transactionList.isEmpty()) View.VISIBLE else View.GONE
     }
+
 
 
 }

@@ -15,7 +15,9 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.card.MaterialCardView
 import yuku.ambilwarna.AmbilWarnaDialog
 import android.app.DatePickerDialog
+import android.widget.ImageButton
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.Calendar
@@ -24,9 +26,10 @@ class AddExpenses : AppCompatActivity() {
     private lateinit var categorySpinner: Spinner
     private lateinit var categoryEditText: EditText
     private var currentColor: Int = Color.parseColor("#D06BED")
-    private lateinit var mainActivity: MainActivity
     private lateinit var dateCard: MaterialCardView
     private lateinit var dateTextView: TextView
+    private lateinit var addTransactionLauncher: ActivityResultLauncher<Intent>
+
 
     private val icons = arrayOf(
         R.drawable.agriculture,
@@ -96,6 +99,13 @@ class AddExpenses : AppCompatActivity() {
         val saveButton: Button = findViewById(R.id.save_button)
         saveButton.setOnClickListener {
             saveTransaction()
+        }
+
+        //navigate to home
+        val addIcon: ImageButton = findViewById(R.id.back_icon)
+        addIcon.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            addTransactionLauncher.launch(intent) // Use the launcher instead
         }
 
 
