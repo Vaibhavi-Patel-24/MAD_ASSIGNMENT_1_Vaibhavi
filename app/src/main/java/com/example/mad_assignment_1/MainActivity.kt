@@ -1,11 +1,10 @@
 package com.example.mad_assignment_1
 
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
+import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import androidx.activity.enableEdgeToEdge
@@ -20,8 +19,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.ViewModelProvider
+import com.example.mad_assignment_1.data.AppDatabase
+import com.example.mad_assignment_1.ui.TransactionViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.card.MaterialCardView
+import com.example.mad_assignment_1.repository.TransactionRepository
+import com.example.mad_assignment_1.ui.TransactionViewModelFactory
 
 class MainActivity : AppCompatActivity() {
     private lateinit var transactionAdapter: TransactionAdapter
@@ -32,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var inputText1: TextView
     private lateinit var totalExpenseTextView: TextView
     private lateinit var incomeTextView: TextView
+    private lateinit var  transactionViewModel: TransactionViewModel
 
 
 
@@ -54,12 +58,20 @@ class MainActivity : AppCompatActivity() {
         totalExpenseTextView = findViewById(R.id.card_6_text_2)
         incomeTextView = findViewById(R.id.card_5_text_2)
 
-
+        // Retrieve and display the stored total balance
+        val totalBalance = getTotalBalance()
+        inputText1.text = "$ $totalBalance"
 
         // Initialize the TransactionAdapter with an empty list and the empty TextView
         transactionAdapter = TransactionAdapter(transactionList, emptyTextView,totalExpenseTextView,incomeTextView)
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = transactionAdapter
+
+        val transactionDao = AppDatabase.getDatabase(this).transactionDao()
+        val repository = TransactionRepository(transactionDao)
+        val factory = TransactionViewModelFactory(repository)
+        transactionViewModel = ViewModelProvider(this, factory)[TransactionViewModel::class.java]
+
 
         // Initialize the ActivityResultLaunche
         addTransactionLauncher = registerForActivityResult(
@@ -89,7 +101,15 @@ class MainActivity : AppCompatActivity() {
 
 
         // Show the salary input prompt when the app opens
-        showSalaryInputPrompt()
+        val newEntryButton = findViewById<Button>(R.id.btnNewEntry)
+
+        newEntryButton.setOnClickListener {
+            showSalaryInputPrompt()
+        }
+
+        // Load initial transaction data from the database
+        loadTransactionsFromDatabase()
+
 
 
         //bottom nav
@@ -191,6 +211,7 @@ class MainActivity : AppCompatActivity() {
     private fun addTransaction(transaction: Transaction) {
         transactionList.add(transaction)
         transactionAdapter.notifyItemInserted(transactionList.size - 1) // Notify adapter of new item
+        transactionViewModel.insertTransaction(transaction)
         updateEmptyState() // Update the empty state after adding a new transaction
         updateTotalExpense()
         updateIncome()
@@ -207,6 +228,7 @@ class MainActivity : AppCompatActivity() {
                 val salaryText = salaryInput.text.toString()
                 val salary = salaryText.toDoubleOrNull()
                 if (salary != null) {
+                    saveTotalBalance(salary)
                     inputText1.text = "$ $salary"
                     updateIncome()
                 } else {
@@ -219,6 +241,34 @@ class MainActivity : AppCompatActivity() {
             }
             .create()
         dialog.show()
+    }
+
+    private fun loadTransactionsFromDatabase() {
+        transactionViewModel.getAllTransactions { transactions ->
+            // Clear the existing list to prevent duplicates
+            transactionList.clear()
+
+            // Add all transactions fetched from the database
+            transactionList.addAll(transactions)
+
+            // Notify the adapter of the data change
+            transactionAdapter.notifyDataSetChanged()
+
+            // Update the UI based on the new data
+            updateEmptyState()
+        }
+    }
+    // Save Total Balance
+    private fun saveTotalBalance(balance: Double) {
+        val sharedPreferences = getSharedPreferences("BalancePrefs", MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putFloat("totalBalance", balance.toFloat())
+        editor.apply()
+    }
+    //Retrieve Total Balance
+    private fun getTotalBalance(): Double {
+        val sharedPreferences = getSharedPreferences("BalancePrefs", MODE_PRIVATE)
+        return sharedPreferences.getFloat("totalBalance", 0.0f).toDouble()
     }
 
 

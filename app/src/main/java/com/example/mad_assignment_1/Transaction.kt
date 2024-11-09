@@ -2,8 +2,13 @@
 
     import android.os.Parcel
     import android.os.Parcelable
+    import androidx.room.Entity
+    import androidx.room.PrimaryKey
 
+
+    @Entity(tableName = "transaction_table")
     data class Transaction(
+        @PrimaryKey(autoGenerate = true) val id: Int = 0,
         val iconResId: Int,
         val title: String,
         val amount: String,
@@ -12,6 +17,7 @@
     ): Parcelable {
         constructor(parcel: Parcel) : this(
             parcel.readInt(),
+            parcel.readInt(),
             parcel.readString() ?: "",
             parcel.readString() ?: "",
             parcel.readString() ?: "",
@@ -19,6 +25,7 @@
         )
 
         override fun writeToParcel(parcel: Parcel, flags: Int) {
+            parcel.writeInt(id)
             parcel.writeInt(iconResId)
             parcel.writeString(title)
             parcel.writeString(amount)
