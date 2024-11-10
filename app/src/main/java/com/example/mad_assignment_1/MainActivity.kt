@@ -297,6 +297,8 @@ class MainActivity : AppCompatActivity() {
                     transactionDao.deleteTransactionById(transactionId)
                     withContext(Dispatchers.Main) {
                         transactionAdapter.notifyDataSetChanged()
+                        updateTotalExpense() // Update total expense
+                        updateIncome()// Update income
                         Toast.makeText(this@MainActivity, "Transaction deleted", Toast.LENGTH_SHORT).show()
                     }
                 } catch (e: Exception) {

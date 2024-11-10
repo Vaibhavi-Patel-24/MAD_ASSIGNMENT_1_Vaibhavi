@@ -9,7 +9,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
+
 class Graph : AppCompatActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -19,6 +22,9 @@ class Graph : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
+
+
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_nav_bar)
 
@@ -42,4 +48,5 @@ class Graph : AppCompatActivity() {
             }
         }
     }
+
 }
