@@ -13,6 +13,7 @@ class TransactionRepository(private val transactionDao: TransactionDao) {
         transactionDao.deleteTransaction(transaction)
     }
 
+
      fun getAllTransactions(): List<Transaction> {
         return transactionDao.getAllTransactions()
     }

@@ -9,14 +9,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import android.graphics.drawable.GradientDrawable
 import android.util.Log
+import android.widget.Button
+import android.widget.ImageButton
 
 
 class TransactionAdapter(
     private var transactionList: List<Transaction>,
     private val emptyTextView: TextView ,
     private val totalExpenseTextView: TextView,
-    private val incomeTextView: TextView
-
+    private val incomeTextView: TextView,
+    private val onDeleteClick: (Int) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
 
@@ -31,6 +33,8 @@ class TransactionAdapter(
         val title: TextView = view.findViewById(R.id.icon_text_1)
         val amount: TextView = view.findViewById(R.id.icon_text_2)
         val date: TextView = view.findViewById(R.id.icon_text_3)
+        val deleteButton: ImageButton = view.findViewById(R.id.delete)
+
     }
 
     // Define ViewHolder for Empty view
@@ -91,9 +95,16 @@ class TransactionAdapter(
             }
 
             holder.date.text = transaction.date
+
+            holder.deleteButton.setOnClickListener {
+                onDeleteClick(transaction.id) // Pass the transaction id to the delete function
+            }
+
         } else if (holder is EmptyViewHolder) {
             holder.emptyMessage.text = "No transactions available"
         }
+
+
     }
 
 

@@ -12,6 +12,9 @@ interface TransactionDao {
     @Delete
     fun deleteTransaction(transaction: Transaction)
 
+    @Query("DELETE FROM transaction_table WHERE id = :transactionId")
+    fun deleteTransactionById(transactionId: Int)
+
     @Query("SELECT * FROM transaction_table ORDER BY date DESC")
     fun getAllTransactions(): List<Transaction>
 }

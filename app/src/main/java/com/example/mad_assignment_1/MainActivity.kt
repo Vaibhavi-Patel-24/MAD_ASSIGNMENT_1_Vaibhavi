@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
@@ -25,6 +26,11 @@ import com.example.mad_assignment_1.ui.TransactionViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.example.mad_assignment_1.repository.TransactionRepository
 import com.example.mad_assignment_1.ui.TransactionViewModelFactory
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import com.example.mad_assignment_1.data.TransactionDao
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
     private lateinit var transactionAdapter: TransactionAdapter
@@ -36,6 +42,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var totalExpenseTextView: TextView
     private lateinit var incomeTextView: TextView
     private lateinit var  transactionViewModel: TransactionViewModel
+    private lateinit var transactionDao: TransactionDao
+
 
 
 
@@ -63,11 +71,17 @@ class MainActivity : AppCompatActivity() {
         inputText1.text = "$ $totalBalance"
 
         // Initialize the TransactionAdapter with an empty list and the empty TextView
-        transactionAdapter = TransactionAdapter(transactionList, emptyTextView,totalExpenseTextView,incomeTextView)
+        transactionAdapter = TransactionAdapter(
+            transactionList,
+            emptyTextView,
+            totalExpenseTextView,
+            incomeTextView){ transactionId ->
+            deleteTransaction(transactionId) // Pass the transaction ID to your delete function
+        }
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = transactionAdapter
 
-        val transactionDao = AppDatabase.getDatabase(this).transactionDao()
+        transactionDao = AppDatabase.getDatabase(this).transactionDao()
         val repository = TransactionRepository(transactionDao)
         val factory = TransactionViewModelFactory(repository)
         transactionViewModel = ViewModelProvider(this, factory)[TransactionViewModel::class.java]
@@ -270,6 +284,28 @@ class MainActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("BalancePrefs", MODE_PRIVATE)
         return sharedPreferences.getFloat("totalBalance", 0.0f).toDouble()
     }
+
+    private fun deleteTransaction(transactionId: Int) {
+        val transaction = transactionList.find { it.id == transactionId }
+        if (transaction != null) {
+            // Remove from the local list first
+            transactionList.remove(transaction)
+
+            // Delete from the Room database
+            CoroutineScope(Dispatchers.IO).launch {
+                try {
+                    transactionDao.deleteTransactionById(transactionId)
+                    withContext(Dispatchers.Main) {
+                        transactionAdapter.notifyDataSetChanged()
+                        Toast.makeText(this@MainActivity, "Transaction deleted", Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
+
 
 
     companion object {
