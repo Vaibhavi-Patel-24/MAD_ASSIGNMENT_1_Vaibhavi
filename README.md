@@ -2,7 +2,7 @@
 
 ## Overview
 
-MAD_ASSIGNMENT_1 is a feature-rich Android application developed as part of an academic assignment. This app exemplifies modern Android development practices, focusing on user experience, data management, and data visualization. Built using Kotlin and leveraging various Android libraries, MAD_ASSIGNMENT_1 aims to provide users with a seamless and engaging experience.
+MAD_ASSIGNMENT_1 is a feature-rich Android application developed as part of an academic assignment. This app exemplifies modern Android development practices, focusing on user experience, data management, and data visualization. Built using Kotlin and leveraging various Android libraries.
 
 ## Table of Contents
 
