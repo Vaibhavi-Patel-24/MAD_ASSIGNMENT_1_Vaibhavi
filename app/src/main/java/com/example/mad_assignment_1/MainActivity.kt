@@ -95,6 +95,7 @@ class MainActivity : AppCompatActivity() {
                 val data = result.data
                 val transaction = data?.getParcelableExtra<Transaction>("transaction")
                 if (transaction != null) {
+
                     addTransaction(transaction)
                 } else {
                     Log.e("MainActivity", "Transaction data is null")
@@ -141,7 +142,9 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.nav_graph -> {
                     // Navigate to GraphActivity
+                    val transactionsArrayList = ArrayList(transactionList)
                     val intent = Intent(this, Graph::class.java)
+                    intent.putParcelableArrayListExtra("transactions", transactionsArrayList)
                     startActivity(intent)
                     true
                 }

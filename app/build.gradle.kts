@@ -8,6 +8,7 @@ android {
     namespace = "com.example.mad_assignment_1"
     compileSdk = 34
 
+
     defaultConfig {
         applicationId = "com.example.mad_assignment_1"
         minSdk = 24
@@ -39,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation("com.github.PhilJay:MPAndroidChart:v3.0.1")
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
     implementation("androidx.room:room-runtime:2.5.0")
     kapt("androidx.room:room-compiler:2.5.0")
@@ -57,6 +59,4 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-
 }

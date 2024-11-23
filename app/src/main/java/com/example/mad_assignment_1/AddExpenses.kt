@@ -182,7 +182,7 @@
                 enteredCategoryName,
                 "-$expenseText",
                 dateTextView.text.toString(),
-                currentColor // Pass the current color
+                currentColor // Pass the current color6
             )
 
             // Prepare the result intent
@@ -190,6 +190,9 @@
                 putExtra("transaction", newTransaction)
             }
             setResult(RESULT_OK, resultIntent)
+
+
+
             finish()
             Log.d("AddExpenses", "Transaction saved: $newTransaction")
         }

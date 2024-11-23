@@ -65,6 +65,7 @@
                 android:layout_width="215dp"
                 android:layout_height="match_parent"
                 android:id="@+id/enter_expenses"
+                android:inputType="number"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toEndOf="@id/doller"
                 android:padding="10dp"
