@@ -10,10 +10,7 @@ MAD_ASSIGNMENT_1 is a feature-rich Android application developed as part of an a
 - [Uses](#uses)
 - [Specialties](#specialties)
 - [Installation](#installation)
-- [Contributing](#contributing)
-- [License](#license)
-- [Acknowledgments](#acknowledgments)
-
+  
 ## Features
 
 ### 1. Modern User Interface
