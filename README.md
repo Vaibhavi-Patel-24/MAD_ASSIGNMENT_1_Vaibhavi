@@ -56,8 +56,8 @@ To run this application, you need to have Android Studio installed. Follow the s
    git clone https://github.com/Vaibhavi-Patel-24/MAD_ASSIGNMENT_1_Vaibhavi.git
 
 ![img_1](https://github.com/user-attachments/assets/69e26599-ba96-4c56-be80-6f9119f286cb)
-![img_1](https://github.com/user-attachments/assets/7013e4a7-cd4a-40b1-ac1b-73dc88312807)
-![img_1](https://github.com/user-attachments/assets/fb194b29-eead-4879-88b8-72e4f19bef34)
+![img_2](https://github.com/user-attachments/assets/e6dcfb1a-409a-448e-a1e3-56db66704fb1)
+![img_3](https://github.com/user-attachments/assets/dcc7c856-9fe0-4f26-9691-86398f0ecdc3)
 ![img_4](https://github.com/user-attachments/assets/d3174e2d-1fc1-4a54-a8db-dccc906d16c1)
 ![img_5](https://github.com/user-attachments/assets/98edc40c-d6a0-40a9-8d14-278efb05579d)
 ![img_6](https://github.com/user-attachments/assets/b518ec6e-8eed-43c9-a9cd-bcd1b980459e)
